@@ -1,0 +1,23 @@
+{
+  "name": "glowgaia/grabbit",
+  "description": "An extremely specific wrapper around Laravel's Illuminate HTTP Client that allows for short and expressive requests to Gaia Online's GSI API",
+  "type": "library",
+  "require": {
+    "illuminate/http": "^11.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11.0"
+  },
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "GlowGaia\\Grabbit\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Sheldon Corcoran",
+      "email": "awesomolocity@gmail.com"
+    }
+  ]
+}
