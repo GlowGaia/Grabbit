@@ -9,6 +9,6 @@ class GrabbitTest extends TestCase{
         $grabbit = new Grabbit();
         $response = $grabbit->it(102, [2])->grab();
 
-        $this->assertSame('admin', $response[0]->get('username'));
+        $this->assertSame('admin', $response[0]['username']);
     }
 }
