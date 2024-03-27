@@ -6,16 +6,18 @@ use Illuminate\Http\Client\Factory;
 use Illuminate\Support\Collection;
 
 class Grabbit extends Factory{
-    private $it;
+    public $methods;
 
     public $gaia_sid;
 
-    public function __construct(Dispatcher $dispatcher = null)
-    {
+    public function __construct($method, $parameters = [], Dispatcher $dispatcher = null){
         parent::__construct($dispatcher);
 
         //Some requests want a Gaia session ID, but don't seem to care whether it's still valid or not.
         $this->gaia_sid = 'nyls9ps8sy6494b6dc251b60a5afxqadufme6kq8b5u9l2i9';
+
+        $this->addMethod($method, $parameters);
+        return $this;
     }
 
     /**
@@ -44,14 +46,14 @@ class Grabbit extends Factory{
     }
 
     /**
-     * @return string
+     * @param $method
+     * @param $parameters
+     * @return self
+     *
+     * Allows for spinning up Grabbits statically
      */
-    private function generateMethodUrl(){
-        $methods = collect($this->it)->escapeWhenCastingToString(false);
-
-        $methods = $methods->implode(',');
-
-        return "[{$methods}]";
+    public static function make($method, $parameters){
+        return new self($method, $parameters);
     }
 
     /**
@@ -59,10 +61,22 @@ class Grabbit extends Factory{
      * @param $parameters - The parameters we're providing. Ex: "Lanzer"
      * @return $this
      */
-    public function it($method, $parameters){
-        $this->it = $this->buildMethod($method, $parameters);
+    public function addMethod($method, $parameters = []){
+        $this->methods[] = $this->buildMethod($method, $parameters);
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    protected function generateMethodUrl(){
+        $methods = collect($this->methods)->escapeWhenCastingToString(false);
+
+        $methods = $methods->implode(',');
+
+        return "[{$methods}]";
+
     }
 
     /**
