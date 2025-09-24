@@ -4,7 +4,7 @@ Grabbit delivers developers a simple way to retrieve data from Gaia Online. It's
 
 **Note: This project is not affiliated with Gaia Online or Gaia Interactive in any way.**
 
-## About 
+## About
 ### Why Grabbit?
 
 - Interacting with Gaia Online's GSI API is a huge pain.
@@ -32,7 +32,7 @@ You can grab a user by their ID, username, email address, or session ID.
 In response, you'll be given a `UserDTO` object that closely matches the GSI response data you'd get via GSI method `102`.
 
 ```php
-$lanzer = Grabbit::grab(User::byId(3)); //UserDTO
+$lanzer = Grabbit::grab(GetUser::byId(3)); //UserDTO
 ```
 
 #### Items
@@ -41,7 +41,7 @@ You can grab an item by its ID.
 In response, you'll be given an `ItemDTO` object.
 
 ```php
-$angelic_halo = Grabbit::grab(Item::byId(1404)); //ItemDTO
+$angelic_halo = Grabbit::grab(GetItem::byId(1404)); //ItemDTO
 ```
 
 #### Aquariums (User Environments)
@@ -49,26 +49,26 @@ You can grab an aquarium by its ID.
 In response, you'll be given an `AquariumDTO` object.
 
 ```php
-$aquarium = Grabbit::grab(UserEnvironment::byId(9116373)); //UserEnvironmentDTO
+$aquarium = Grabbit::grab(GetUserEnvironment::byId(9116373)); //UserEnvironmentDTO
 ```
 
 #### Aquarium Inhabitants
 You can grab an aquarium's inhabitants by the Aquarium ID.  
 In response, you'll be given a `Collection` of `InhabitantDTO` objects.
-    
+
 ```php
-$inhabitants = Grabbit::grab(Inhabitants::byId(9116373)); //Collection<InhabitantDTO>
+$inhabitants = Grabbit::grab(GetInhabitants::byId(9116373)); //Collection<InhabitantDTO>
 ```
 
 ### Multiple Requests
 
 You can make multiple requests at once by providing an array to the `grab` method.  
-In response, you'll be given a `Collection` of `DTO` objects. 
+In response, you'll be given a `Collection` of `DTO` objects.
 
 ```php
 $aquarium = Grabbit::grab([
-    UserEnvironment::byId(9116373),
-    Inhabitant::byId(9116373),
+    GetUserEnvironment::byId(9116373),
+    GetInhabitant::byId(9116373),
 ]);//Collection<UserEnvironmentDTO, InhabitantDTO>
 ```
 
