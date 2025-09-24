@@ -1,101 +1,87 @@
 <?php
+
+declare(strict_types=1);
+
 namespace GlowGaia\Grabbit;
 
-use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Http\Client\Factory;
+use Closure;
+use GlowGaia\Grabbit\Shared\Contracts\DTOInterface;
+use GlowGaia\Grabbit\Shared\GSIOperation;
 use Illuminate\Support\Collection;
+use JsonException;
+use Saloon\Exceptions\Request\FatalRequestException;
+use Saloon\Exceptions\Request\RequestException;
 
-class Grabbit extends Factory{
-    public $methods;
+class Grabbit
+{
+    public Collection $operations;
 
-    public $gaia_sid;
+    public function __construct(array|GSIOperation $operations = [])
+    {
+        if ($operations instanceof GSIOperation) {
+            $operations = [$operations];
+        }
 
-    public function __construct($method, $parameters = [], Dispatcher $dispatcher = null){
-        parent::__construct($dispatcher);
+        $this->operations = collect($operations);
+    }
 
-        //Some requests want a Gaia session ID, but don't seem to care whether it's still valid or not.
-        $this->gaia_sid = 'nyls9ps8sy6494b6dc251b60a5afxqadufme6kq8b5u9l2i9';
+    public static function grab(array|GSIOperation $operations = []): Closure|DTOInterface|Collection
+    {
+        /** @var Collection<DTOInterface> $response */
+        $response = new self($operations)->send()->dto();
+        if ($response->count() === 1) {
+            /** @return DTOInterface */
+            return $response->first();
+        }
 
-        $this->addMethod($method, $parameters);
+        return $response;
+    }
+
+    public static function make(array|GSIOperation $operations = []): Grabbit
+    {
+        return new self($operations);
+    }
+
+    public function it(array $operations = []): Grabbit
+    {
+        $this->operations = collect($operations);
+
         return $this;
     }
 
-    /**
-     * @param $toCollection - Object or array that will (recursively) be turned into a collection
-     * @return Collection
-     */
-    private function recursive($toCollection){
-        return $toCollection->map(function ($part){
-            if(is_array($part) || is_object($part)){
-                return $this->recursive(collect($part));
-            }
+    public function send(): Grabbit
+    {
+        $connector = new Gaiaconnector;
+        $request = new GSIRequest(collect());
 
-            return $part;
+        $this->operations->each(function ($operation) use ($request) {
+            $operation->request = $request;
+            $request->operations->push($operation);
+        });
+
+        try {
+            $response = $connector->send($request);
+            $this->operations->each(function ($operation, $index) use ($response) {
+                $operation->response = $response->json()[$index];
+            });
+        } catch (FatalRequestException|JsonException|RequestException $e) {
+            error_log($e->getMessage());
+        }
+
+        return $this;
+    }
+
+    public function json(): Collection
+    {
+        return $this->operations->map(function (GSIOperation $operation) {
+            return $operation->json();
         });
     }
 
-    /**
-     * @param $method - Method number. Ex: 102
-     * @param $parameters - Parameters for the method call. Ex: "Lanzer"
-     * @return string
-     */
-    private function buildMethod($method, $parameters = []){
-        $parameters = collect($parameters)->escapeWhenCastingToString(false);
-
-        return "[{$method},{$parameters}]";
-    }
-
-    /**
-     * @param $method
-     * @param $parameters
-     * @return self
-     *
-     * Allows for spinning up Grabbits statically
-     */
-    public static function make($method, $parameters){
-        return new self($method, $parameters);
-    }
-
-    /**
-     * @param $method - The method we're requesting. Ex: 102
-     * @param $parameters - The parameters we're providing. Ex: "Lanzer"
-     * @return $this
-     */
-    public function addMethod($method, $parameters = []){
-        $this->methods[] = $this->buildMethod($method, $parameters);
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    protected function generateMethodUrl(){
-        $methods = collect($this->methods)->escapeWhenCastingToString(false);
-
-        $methods = $methods->implode(',');
-
-        return "[{$methods}]";
-
-    }
-
-    /**
-     * @return Collection - A collection equivalent to the JSON returned by Gaia's GSI
-     */
-    public function grab(){
-        $url = 'https://www.gaiaonline.com/chat/gsi/index.php';
-
-        $response = $this::withHeaders([
-            'Content-Type' => 'application/x-www-form-urlencoded',
-            'Cookie' => "gaia55_sid={$this->gaia_sid}",
-        ])->asForm()->post($url, [
-            'v' => 'json',
-            'X' => time(),
-            'm' => $this->generateMethodUrl(),
-        ]);
-
-        return $this->recursive(collect($response->json()))->map(function ($item){
-            return $item->get(2);
+    public function dto(): Collection
+    {
+        return $this->operations->map(function (GSIOperation $operation) {
+            return $operation->dto();
         });
     }
 }
