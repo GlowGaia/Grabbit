@@ -19,7 +19,8 @@ class Inhabitant implements DTOInterface
         public bool $in_env,
         public int $item_id,
         public int $lifespan,
-        public ?ItemSpecifics $item_specifics
+        public ?ItemSpecifics $item_specifics,
+        public ?GameSpecifics $game_specifics,
     ) {}
 
     public static function fromArray($data): self
@@ -35,6 +36,7 @@ class Inhabitant implements DTOInterface
             item_id: (int) $data['item_id'],
             lifespan: (int) $data['lifespan'],
             item_specifics: $data['item_specifics'] ?? null ? ItemSpecifics::fromArray($data['item_specifics']) : null,
+            game_specifics: $data['game_specifics'] ?? null ? GameSpecifics::fromArray($data['game_specifics']) : null,
         );
     }
 }
