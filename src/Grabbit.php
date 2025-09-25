@@ -28,7 +28,7 @@ class Grabbit
     public static function grab(array|GSIOperation $operations = []): Closure|DTOInterface|Collection
     {
         /** @var Collection<DTOInterface> $response */
-        $response = new self($operations)->send()->dto();
+        $response = (new self($operations))->send()->dto();
         if ($response->count() === 1) {
             /** @return DTOInterface */
             return $response->first();
