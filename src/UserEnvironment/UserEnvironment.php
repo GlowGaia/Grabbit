@@ -49,7 +49,7 @@ class UserEnvironment implements DTOInterface
             inhab_retire: collect($data['inhab_retire'] ?: [])->map(function ($inhabitant) {
                 return InhabRetire::fromArray($inhabitant);
             }),
-            game_info: $data['game_info'] ?? null ? GameInfo::fromArray($data['game_info'][1]) : null,
+            game_info: GameInfo::fromArray($data['game_info'][1] ?? null),
         );
     }
 }

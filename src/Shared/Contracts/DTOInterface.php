@@ -6,5 +6,5 @@ namespace GlowGaia\Grabbit\Shared\Contracts;
 
 interface DTOInterface
 {
-    public static function fromArray($data): self;
+    public static function fromArray($data): ?self;
 }

@@ -21,18 +21,22 @@ class GameInfo implements DTOInterface
         public int $player_count
     ) {}
 
-    public static function fromArray($data): self
+    public static function fromArray($data): ?self
     {
-        return new self(
-            type: $data['type'],
-            instance_id: $data['instance_id'],
-            open_time: DateTimeImmutable::createFromFormat('U', (string) $data['open_time']),
-            close_time: DateTimeImmutable::createFromFormat('U', (string) $data['close_time']),
-            end_time: DateTimeImmutable::createFromFormat('U', (string) $data['end_time']),
-            length: $data['length'],
-            results_time: DateTimeImmutable::createFromFormat('U', (string) $data['results_time']),
-            state: State::from($data['state']),
-            player_count: $data['player_count'],
-        );
+        if ($data) {
+            return new self(
+                type: $data['type'],
+                instance_id: $data['instance_id'],
+                open_time: DateTimeImmutable::createFromFormat('U', (string) $data['open_time']),
+                close_time: DateTimeImmutable::createFromFormat('U', (string) $data['close_time']),
+                end_time: DateTimeImmutable::createFromFormat('U', (string) $data['end_time']),
+                length: $data['length'],
+                results_time: DateTimeImmutable::createFromFormat('U', (string) $data['results_time']),
+                state: State::from($data['state']),
+                player_count: $data['player_count'],
+            );
+        }
+
+        return null;
     }
 }
