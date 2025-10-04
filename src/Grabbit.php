@@ -51,7 +51,7 @@ class Grabbit
 
     public function send(): Grabbit
     {
-        $connector = new Gaiaconnector;
+        $connector = new GaiaConnector;
         $request = new GSIRequest(collect());
 
         $this->operations->each(function ($operation) use ($request) {
