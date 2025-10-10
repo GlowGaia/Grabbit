@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace GlowGaia\Grabbit\Environment;
 
 use DateTimeImmutable;
-use GlowGaia\Grabbit\Shared\Contracts\DTOInterface;
+use GlowGaia\Grabbit\Shared\Contracts\DTO;
 use Illuminate\Support\Collection;
 
-class Environment implements DTOInterface
+class Environment extends DTO
 {
     public function __construct(
         public Collection $attributes,
@@ -19,7 +19,7 @@ class Environment implements DTOInterface
         public DateTimeImmutable $gaia_curr_time,
     ) {}
 
-    public static function fromArray($data): self
+    public static function fromArray($data): static
     {
         return new self(
             attributes: collect($data['attributes'])->transform(function ($attribute) {

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace GlowGaia\Grabbit\UserEnvironment\Inhabitants;
 
-use GlowGaia\Grabbit\Shared\Contracts\DTOInterface;
+use GlowGaia\Grabbit\Shared\Contracts\DTO;
 use Illuminate\Support\Collection;
 
-class ItemSpecifics implements DTOInterface
+class ItemSpecifics extends DTO
 {
     public function __construct(
         public int $item_id,
@@ -21,7 +21,7 @@ class ItemSpecifics implements DTOInterface
         public string $premium_img,
     ) {}
 
-    public static function fromArray($data): self
+    public static function fromArray($data): static
     {
         return new self(
             item_id: (int) $data['item_id'],

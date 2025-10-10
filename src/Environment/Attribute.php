@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace GlowGaia\Grabbit\Environment;
 
-use GlowGaia\Grabbit\Shared\Contracts\DTOInterface;
+use GlowGaia\Grabbit\Shared\Contracts\DTO;
 use Illuminate\Support\Collection;
 
-class Attribute implements DTOInterface
+class Attribute extends DTO
 {
     public function __construct(
         public string $name,
@@ -16,7 +16,7 @@ class Attribute implements DTOInterface
         public Collection $flavors,
     ) {}
 
-    public static function fromArray($data): self
+    public static function fromArray($data): static
     {
         return new self(
             name: $data['name'],

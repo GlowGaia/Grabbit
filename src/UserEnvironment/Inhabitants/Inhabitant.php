@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace GlowGaia\Grabbit\UserEnvironment\Inhabitants;
 
 use DateTimeImmutable;
-use GlowGaia\Grabbit\Shared\Contracts\DTOInterface;
+use GlowGaia\Grabbit\Shared\Contracts\DTO;
 
-class Inhabitant implements DTOInterface
+class Inhabitant extends DTO
 {
     public function __construct(
         public string $name,
@@ -23,7 +23,7 @@ class Inhabitant implements DTOInterface
         public ?GameSpecifics $game_specifics,
     ) {}
 
-    public static function fromArray($data): self
+    public static function fromArray($data): static
     {
         return new self(
             name: $data['name'] ?? '',

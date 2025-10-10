@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace GlowGaia\Grabbit\UserEnvironment;
 
 use DateTimeImmutable;
-use GlowGaia\Grabbit\Shared\Contracts\DTOInterface;
+use GlowGaia\Grabbit\Shared\Contracts\DTO;
 use Illuminate\Support\Collection;
 
-class UserEnvironment implements DTOInterface
+class UserEnvironment extends DTO
 {
     public function __construct(
         public int $serial,
@@ -28,7 +28,7 @@ class UserEnvironment implements DTOInterface
         public GameInfo|NullGameInfo $game_info,
     ) {}
 
-    public static function fromArray($data): self
+    public static function fromArray($data): static
     {
         return new self(
             serial: (int) $data['serial'],
@@ -49,7 +49,7 @@ class UserEnvironment implements DTOInterface
             inhab_retire: collect($data['inhab_retire'] ?: [])->map(function ($inhabitant) {
                 return InhabRetire::fromArray($inhabitant);
             }),
-            game_info: GameInfo::fromArray($data['game_info'][1] ?? null),
+            game_info: isset($data['game_info']) ? GameInfo::fromArray($data['game_info'][1]) : NullGameInfo::fromArray([]),
         );
     }
 }

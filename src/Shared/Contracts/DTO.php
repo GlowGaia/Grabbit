@@ -1,0 +1,18 @@
+<?php
+
+declare(strict_types=1);
+
+namespace GlowGaia\Grabbit\Shared\Contracts;
+
+abstract class DTO implements DTOInterface
+{
+    public static function fromArray($data): static
+    {
+        return new static;
+    }
+
+    public function isNull(): bool
+    {
+        return false;
+    }
+}

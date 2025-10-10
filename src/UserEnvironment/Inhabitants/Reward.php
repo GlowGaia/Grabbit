@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace GlowGaia\Grabbit\UserEnvironment\Inhabitants;
 
-use GlowGaia\Grabbit\Shared\Contracts\DTOInterface;
+use GlowGaia\Grabbit\Shared\Contracts\DTO;
 
-class Reward implements DTOInterface
+class Reward extends DTO
 {
     public function __construct(
         public int $type,
@@ -17,7 +17,7 @@ class Reward implements DTOInterface
         public int $cap,
     ) {}
 
-    public static function fromArray($data): self
+    public static function fromArray($data): static
     {
         return new self(
             type: (int) $data['type'],

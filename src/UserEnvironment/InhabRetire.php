@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace GlowGaia\Grabbit\UserEnvironment;
 
-use GlowGaia\Grabbit\Shared\Contracts\DTOInterface;
+use GlowGaia\Grabbit\Shared\Contracts\DTO;
 
-class InhabRetire implements DTOInterface
+class InhabRetire extends DTO
 {
     public function __construct(
         public int $serial,
@@ -14,7 +14,7 @@ class InhabRetire implements DTOInterface
         public int $retire_grant_id,
     ) {}
 
-    public static function fromArray($data): self
+    public static function fromArray($data): static
     {
         return new self(
             serial: $data['serial'],

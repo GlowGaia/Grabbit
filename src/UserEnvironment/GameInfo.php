@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace GlowGaia\Grabbit\UserEnvironment;
 
 use DateTimeImmutable;
-use GlowGaia\Grabbit\Shared\Contracts\DTOInterface;
+use GlowGaia\Grabbit\Shared\Contracts\DTO;
 
-class GameInfo implements DTOInterface
+class GameInfo extends DTO
 {
     public function __construct(
         public int $type,
@@ -21,22 +21,18 @@ class GameInfo implements DTOInterface
         public int $player_count
     ) {}
 
-    public static function fromArray($data): GameInfo|NullGameInfo
+    public static function fromArray($data): static
     {
-        if ($data) {
-            return new self(
-                type: $data['type'],
-                instance_id: $data['instance_id'],
-                open_time: DateTimeImmutable::createFromFormat('U', (string) $data['open_time']),
-                close_time: DateTimeImmutable::createFromFormat('U', (string) $data['close_time']),
-                end_time: DateTimeImmutable::createFromFormat('U', (string) $data['end_time']),
-                length: $data['length'],
-                results_time: DateTimeImmutable::createFromFormat('U', (string) $data['results_time']),
-                state: State::from($data['state']),
-                player_count: $data['player_count'],
-            );
-        }
-
-        return NullGameInfo::fromArray([]);
+        return new self(
+            type: $data['type'],
+            instance_id: $data['instance_id'],
+            open_time: DateTimeImmutable::createFromFormat('U', (string) $data['open_time']),
+            close_time: DateTimeImmutable::createFromFormat('U', (string) $data['close_time']),
+            end_time: DateTimeImmutable::createFromFormat('U', (string) $data['end_time']),
+            length: $data['length'],
+            results_time: DateTimeImmutable::createFromFormat('U', (string) $data['results_time']),
+            state: State::from($data['state']),
+            player_count: $data['player_count'],
+        );
     }
 }

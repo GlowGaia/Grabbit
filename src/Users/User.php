@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace GlowGaia\Grabbit\Users;
 
-use GlowGaia\Grabbit\Shared\Contracts\DTOInterface;
+use GlowGaia\Grabbit\Shared\Contracts\DTO;
 
-class User implements DTOInterface
+class User extends DTO
 {
     public function __construct(
         public int $gaia_id,
@@ -27,7 +27,7 @@ class User implements DTOInterface
         public string $gender,
     ) {}
 
-    public static function fromArray($data): self
+    public static function fromArray($data): static
     {
         return new self(
             gaia_id: $data['gaia_id'],

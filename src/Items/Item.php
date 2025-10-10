@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace GlowGaia\Grabbit\Items;
 
 use DateTimeImmutable;
-use GlowGaia\Grabbit\Shared\Contracts\DTOInterface;
+use GlowGaia\Grabbit\Shared\Contracts\DTO;
 use Illuminate\Support\Collection;
 
-class Item implements DTOInterface
+class Item extends DTO
 {
     public function __construct(
         public Collection $keywords,
@@ -34,7 +34,7 @@ class Item implements DTOInterface
         public int $item_id,
     ) {}
 
-    public static function fromArray($data): self
+    public static function fromArray($data): static
     {
         return new self(
             keywords: collect(explode(' ', $data['keywords'])),
