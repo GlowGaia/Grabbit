@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace GlowGaia\Grabbit\Shared;
 
+use Exception;
 use GlowGaia\Grabbit\Shared\Contracts\DTOInterface;
 use GlowGaia\Grabbit\Shared\Contracts\GSIOperationInterface;
 use GlowGaia\Grabbit\Shared\Exceptions\GSIError;
 use Illuminate\Support\Collection;
-use JsonException;
 use Saloon\Http\Response;
 
 class GSIOperation implements GSIOperationInterface
@@ -33,51 +33,46 @@ class GSIOperation implements GSIOperationInterface
 
     public function json(): array
     {
-        if ($this->response) {
-            return $this->response;
-        }
-
-        return [];
+        return $this->response ?? [];
     }
 
-    /**
-     * @throws JsonException
-     * @throws GSIError
-     */
     public function response(Response $response, int $index): void
     {
         if ($this->validateResponse($response, $index)) {
-            $this->setResponse($response, $index);
+            $this->setResponse();
         }
     }
 
-    /**
-     * @throws GSIError
-     * @throws JsonException|GSIError
-     */
     public function validateResponse(Response $response, int $index): bool
     {
-        $response = $response->json();
-        if (count($response) <= $index) {
-            // Malformed request JSON usually is what causes this.
-            // Unlikely since our JSON request is built programmatically, but you never know
-            GSIError::from($response[0][2]);
+        try {
+            $response = $response->json();
+            if (count($response) <= $index) {
+                // Malformed request JSON usually is what causes this.
+                // Unlikely since our JSON request is built programmatically, but you never know
+                GSIError::from($response[0][2]);
+            }
+
+            $response = $response[$index];
+
+            if ($response[1] && count($response[2])) {
+                $this->response = $response;
+
+                return true;
+            }
+
+            GSIError::from($response[2]);
+        } catch (Exception $exception) {
+            error_log($exception->getMessage());
         }
 
-        $response = $response[$index];
+        $this->dto = $this->null_dto;
 
-        if ($response[1] && count($response[2])) {
-            return true;
-        }
-
-        GSIError::from($response[2]);
+        return false;
     }
 
-    /**
-     * @throws JsonException
-     */
-    public function setResponse(Response $response, int $index): void
+    public function setResponse(): void
     {
-        $this->response = $response->json()[$index][2];
+        $this->response = $this->response[2];
     }
 }

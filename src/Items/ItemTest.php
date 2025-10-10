@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace GlowGaia\Grabbit\Items;
 
 use GlowGaia\Grabbit\Grabbit;
-use GlowGaia\Grabbit\Shared\Exceptions\GSIError;
 use PHPUnit\Framework\TestCase;
 
 class ItemTest extends TestCase
@@ -17,17 +16,17 @@ class ItemTest extends TestCase
         $this->assertEquals('Angelic Halo', $item->name);
     }
 
-    public function test_it_will_throw_an_error_when_retrieving_nonexistent_item()
+    public function test_it_gives_null_item_on_nonexistent_user()
     {
-        $this->expectException(GSIError::class);
-
         $nonexistent_item = Grabbit::grab(GetItem::byId(-1));
+
+        $this->assertInstanceOf(NullItem::class, $nonexistent_item);
     }
 
-    public function test_it_can_handle_items_with_no_data()
+    public function test_it_returns_null_item_for_items_with_no_information()
     {
-        $this->expectException(GSIError::class);
-
         $no_info_item = Grabbit::grab(GetItem::byId(1));
+
+        $this->assertInstanceOf(NullItem::class, $no_info_item);
     }
 }

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace GlowGaia\Grabbit\Items;
 
 use GlowGaia\Grabbit\Shared\GSIOperation;
-use Saloon\Http\Response;
 
 class GetItem extends GSIOperation
 {
@@ -22,8 +21,8 @@ class GetItem extends GSIOperation
         return new self(712, [$id]);
     }
 
-    public function setResponse(Response $response, int $index): void
+    public function setResponse(): void
     {
-        $this->response = $response->json()[$index][2][0];
+        $this->response = $this->response[2][0];
     }
 }

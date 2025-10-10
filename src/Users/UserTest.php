@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace GlowGaia\Grabbit\Users;
 
 use GlowGaia\Grabbit\Grabbit;
-use GlowGaia\Grabbit\Shared\Exceptions\GSIError;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\TestCase;
 
@@ -49,10 +48,10 @@ class UserTest extends TestCase
         $this->assertEquals(58812, $second_user->gaia_id);
     }
 
-    public function test_it_throws_an_error_on_user_not_found()
+    public function test_it_gives_null_user_on_nonexistent_user()
     {
-        $this->expectException(GSIError::class);
-
         $nonexistent_user = Grabbit::grab(GetUser::byId(1));
+
+        $this->assertInstanceOf(NullUser::class, $nonexistent_user);
     }
 }
