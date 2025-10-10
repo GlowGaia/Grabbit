@@ -8,21 +8,26 @@ use Closure;
 use GlowGaia\Grabbit\Shared\Contracts\DTOInterface;
 use GlowGaia\Grabbit\Shared\GSIOperation;
 use Illuminate\Support\Collection;
-use JsonException;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
+use Saloon\Http\Response;
 
 class Grabbit
 {
     public Collection $operations;
 
+    public GaiaConnector $connector;
+
+    public GSIRequest $request;
+
+    public Response $response;
+
     public function __construct(array|GSIOperation $operations = [])
     {
-        if ($operations instanceof GSIOperation) {
-            $operations = [$operations];
-        }
+        $this->operations = Collection::wrap($operations);
 
-        $this->operations = collect($operations);
+        $this->connector = new GaiaConnector;
+        $this->request = new GSIRequest(collect());
     }
 
     public static function grab(array|GSIOperation $operations = []): Closure|DTOInterface|Collection
@@ -49,24 +54,22 @@ class Grabbit
         return $this;
     }
 
+    /**
+     * @throws FatalRequestException|RequestException
+     */
     public function send(): Grabbit
     {
-        $connector = new GaiaConnector;
-        $request = new GSIRequest(collect());
+        $this->prepare();
 
-        $this->operations->each(function ($operation) use ($request) {
-            $operation->request = $request;
-            $request->operations->push($operation);
+        $this->response = $this->connector->send(
+            $this->request,
+        );
+
+        $this->operations->transform(function ($operation, $index) {
+            $operation->response($this->response, $index);
+
+            return $operation;
         });
-
-        try {
-            $response = $connector->send($request);
-            $this->operations->each(function ($operation, $index) use ($response) {
-                $operation->response = $response->json()[$index];
-            });
-        } catch (FatalRequestException|JsonException|RequestException $e) {
-            error_log($e->getMessage());
-        }
 
         return $this;
     }
@@ -82,6 +85,13 @@ class Grabbit
     {
         return $this->operations->map(function (GSIOperation $operation) {
             return $operation->dto();
+        });
+    }
+
+    public function prepare(): void
+    {
+        $this->operations->each(function ($operation) {
+            $this->request->operations->push($operation);
         });
     }
 }

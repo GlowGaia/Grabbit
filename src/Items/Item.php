@@ -39,7 +39,7 @@ class Item implements DTOInterface
         return new self(
             keywords: collect(explode(' ', $data['keywords'])),
             average: (int) $data['average'],
-            minimum: collect($data['minimum'])->transform(function ($value) {
+            minimum: Collection::wrap($data['minimum'])->transform(function ($value) {
                 return (int) $value;
             }),
             listings: (int) $data['listings'],
@@ -57,7 +57,7 @@ class Item implements DTOInterface
             trade_ignore: (bool) $data['trade_ignore'],
             is_released: (bool) $data['is_released'],
             sellback_ignore: (bool) $data['sellback_ignore'],
-            variation_ids: collect($data['variation_ids'])->transform(function ($value) {
+            variation_ids: Collection::wrap($data['variation_ids'])->transform(function ($value) {
                 return (int) $value;
             }),
             created: DateTimeImmutable::createFromFormat('Y-m-d', $data['created']),

@@ -13,6 +13,7 @@ class GetUser extends GSIOperation
         parent::__construct($method, $parameters);
 
         $this->dto = User::class;
+        $this->null_dto = NUllUser::class;
     }
 
     public static function byId(int $id): GetUser

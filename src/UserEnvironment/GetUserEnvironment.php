@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace GlowGaia\Grabbit\UserEnvironment;
 
 use GlowGaia\Grabbit\Shared\GSIOperation;
+use Saloon\Http\Response;
 
 class GetUserEnvironment extends GSIOperation
 {
@@ -16,6 +17,7 @@ class GetUserEnvironment extends GSIOperation
 
         $this->id = $parameters[0];
         $this->dto = UserEnvironment::class;
+        $this->null_dto = NullUserEnvironment::class;
     }
 
     /**
@@ -32,12 +34,8 @@ class GetUserEnvironment extends GSIOperation
         ]);
     }
 
-    public function json(): array
+    public function setResponse(Response $response, int $index): void
     {
-        if ($this->response) {
-            return $this->response[2][$this->id];
-        }
-
-        return [];
+        $this->response = $response->json()[$index][2][$this->id];
     }
 }

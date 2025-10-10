@@ -25,7 +25,7 @@ class UserEnvironment implements DTOInterface
         public ?string $env_bg_id,
         public DateTimeImmutable $env_last_grant_time,
         public Collection $inhab_retire,
-        public ?GameInfo $game_info,
+        public GameInfo|NullGameInfo $game_info,
     ) {}
 
     public static function fromArray($data): self

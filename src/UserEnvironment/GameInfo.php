@@ -21,7 +21,7 @@ class GameInfo implements DTOInterface
         public int $player_count
     ) {}
 
-    public static function fromArray($data): ?self
+    public static function fromArray($data): GameInfo|NullGameInfo
     {
         if ($data) {
             return new self(
@@ -37,6 +37,6 @@ class GameInfo implements DTOInterface
             );
         }
 
-        return null;
+        return NullGameInfo::fromArray([]);
     }
 }
