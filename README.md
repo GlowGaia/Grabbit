@@ -18,7 +18,7 @@ It's a play on Gaia's famous "Grunny" character. Plus, it breaks down into "grab
 
 ## Installation
 
-`composer require saloonlabs/grabbit`
+`composer require glowgaia/grabbit`
 
 ## Usage
 
