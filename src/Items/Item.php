@@ -37,7 +37,7 @@ class Item extends DTO
     public static function fromArray($data): static
     {
         return new self(
-            keywords: collect(explode(' ', $data['keywords'])),
+            keywords: collect(explode(' ', $data['keywords'] ?? '')),
             average: (int) $data['average'],
             minimum: Collection::wrap($data['minimum'])->transform(function ($value) {
                 return (int) $value;
