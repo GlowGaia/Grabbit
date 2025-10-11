@@ -43,7 +43,7 @@ class Item extends DTO
                 return (int) $value;
             }),
             listings: (int) $data['listings'],
-            deviation: (float) $data['deviation'],
+            deviation: isset($data['deviation']) ? (float) $data['deviation'] : (float) null,
             name: $data['name'],
             description: $data['description'],
             thumbnail: $data['thumbnail'],

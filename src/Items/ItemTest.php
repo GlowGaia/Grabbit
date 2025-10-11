@@ -29,4 +29,10 @@ class ItemTest extends TestCase
 
         $this->assertInstanceOf(NullItem::class, $no_info_item);
     }
+
+    public function test_it_works_on_items_without_deviations(){
+        $item = Grabbit::grab(GetItem::byId(17746));
+
+        $this->assertEquals('Ring: Buddy Call', $item->name);
+    }
 }
