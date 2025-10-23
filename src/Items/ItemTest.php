@@ -16,7 +16,7 @@ class ItemTest extends TestCase
         $this->assertEquals('Angelic Halo', $item->name);
     }
 
-    public function test_it_gives_null_item_on_nonexistent_user()
+    public function test_it_gives_null_item_on_nonexistent_item()
     {
         $nonexistent_item = Grabbit::grab(GetItem::byId(-1));
 
