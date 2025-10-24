@@ -16,14 +16,14 @@ class Attribute extends DTO
         public Collection $flavors,
     ) {}
 
-    public static function fromArray($data): static
+    public static function fromCollection($data): static
     {
         return new self(
-            name: $data['name'],
-            min_value: $data['min_value'],
-            max_value: $data['max_value'],
-            flavors: collect($data['flavors'])->transform(function ($flavor) {
-                return Flavor::fromArray($flavor);
+            name: $data->get('name'),
+            min_value: $data->get('min_value'),
+            max_value: $data->get('max_value'),
+            flavors: $data->get('flavors')->transform(function ($flavor) {
+                return Flavor::fromString($flavor);
             }),
         );
     }

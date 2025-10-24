@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace GlowGaia\Grabbit\Shared\Contracts;
 
-abstract class DTO implements DTOInterface
+use GlowGaia\Grabbit\Shared\Helpers\RecursiveCollection;
+
+abstract class DTO
 {
-    public static function fromArray($data): static
+    public static function fromCollection(RecursiveCollection $data): self
     {
         return new static;
-    }
-
-    public function isNull(): bool
-    {
-        return false;
     }
 }

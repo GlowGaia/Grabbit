@@ -14,12 +14,12 @@ class GameSpecifics extends DTO
         public Collection $rewards,
     ) {}
 
-    public static function fromArray($data): static
+    public static function fromCollection($data): static
     {
         return new self(
             drop_type: (int) $data['drop_type'],
             rewards: collect($data['rewards'])->transform(function ($reward) {
-                return Reward::fromArray($reward);
+                return Reward::fromCollection($reward);
             }),
         );
     }

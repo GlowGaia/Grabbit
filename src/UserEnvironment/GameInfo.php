@@ -21,18 +21,18 @@ class GameInfo extends DTO
         public int $player_count
     ) {}
 
-    public static function fromArray($data): static
+    public static function fromCollection($data): static
     {
         return new self(
-            type: $data['type'],
-            instance_id: $data['instance_id'],
-            open_time: DateTimeImmutable::createFromFormat('U', (string) $data['open_time']),
-            close_time: DateTimeImmutable::createFromFormat('U', (string) $data['close_time']),
-            end_time: DateTimeImmutable::createFromFormat('U', (string) $data['end_time']),
-            length: $data['length'],
-            results_time: DateTimeImmutable::createFromFormat('U', (string) $data['results_time']),
-            state: State::from($data['state']),
-            player_count: $data['player_count'],
+            type: $data->get('type'),
+            instance_id: $data->get('instance_id'),
+            open_time: DateTimeImmutable::createFromFormat('U', (string) $data->get('open_time')),
+            close_time: DateTimeImmutable::createFromFormat('U', (string) $data->get('close_time')),
+            end_time: DateTimeImmutable::createFromFormat('U', (string) $data->get('end_time')),
+            length: $data->get('length'),
+            results_time: DateTimeImmutable::createFromFormat('U', (string) $data->get('results_time')),
+            state: State::from($data->get('state', '')),
+            player_count: $data->get('player_count'),
         );
     }
 }

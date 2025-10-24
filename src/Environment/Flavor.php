@@ -12,10 +12,10 @@ class Flavor extends DTO
         public string $flavor,
     ) {}
 
-    public static function fromArray($data): static
+    public static function fromString(string $flavor): static
     {
         return new self(
-            flavor: $data,
+            flavor: $flavor
         );
     }
 }

@@ -19,17 +19,17 @@ class Environment extends DTO
         public DateTimeImmutable $gaia_curr_time,
     ) {}
 
-    public static function fromArray($data): static
+    public static function fromCollection($data): Environment
     {
         return new self(
-            attributes: collect($data['attributes'])->transform(function ($attribute) {
-                return Attribute::fromArray($attribute);
+            attributes: $data->get('attributes')->transform(function ($attribute) {
+                return Attribute::fromCollection($attribute);
             }),
-            engine_delay_time: (int) $data['engine_delay_time'],
-            max_health: (int) $data['max_health'],
-            max_inhabitant_count: (int) $data['max_inhabitant_count'],
-            max_decoration_count: (int) $data['max_decoration_count'],
-            gaia_curr_time: DateTimeImmutable::createFromFormat('U', (string) $data['gaia_curr_time']),
+            engine_delay_time: (int) $data->get('engine_delay_time'),
+            max_health: (int) $data->get('max_health'),
+            max_inhabitant_count: (int) $data->get('max_inhabitant_count'),
+            max_decoration_count: (int) $data->get('max_decoration_count'),
+            gaia_curr_time: DateTimeImmutable::createFromFormat('U', (string) $data->get('gaia_curr_time')),
         );
     }
 }

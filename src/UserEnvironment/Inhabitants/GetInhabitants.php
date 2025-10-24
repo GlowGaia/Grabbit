@@ -4,43 +4,56 @@ declare(strict_types=1);
 
 namespace GlowGaia\Grabbit\UserEnvironment\Inhabitants;
 
-use GlowGaia\Grabbit\Shared\GSIOperation;
-use Illuminate\Support\Collection;
+use GlowGaia\Grabbit\Shared\Contracts\GSIRequest;
+use GlowGaia\Grabbit\Shared\Helpers\RecursiveCollection;
+use Saloon\Http\Response;
 
-class GetInhabitants extends GSIOperation
+class GetInhabitants extends GSIRequest
 {
-    private bool $item_specifics;
-
-    public function __construct(int $method, ?array $parameters)
-    {
-        parent::__construct($method, $parameters);
-
-        $this->dto = Inhabitant::class;
-        $this->item_specifics = (bool) $parameters[1] ?? false;
-    }
+    /**
+     * @param  int  $id  - User Environment ID
+     * @param  bool  $item_specifics  - Adds a key to the array that lists item information for each inhabitant item_id
+     * @param  bool  $in_environment  - Filter inhabitants to only the ones currently in the user's environment
+     */
+    public function __construct(
+        public int $id,
+        public bool $item_specifics = true,
+        public bool $in_environment = false
+    ) {}
 
     public static function byId(int $id, bool $item_specifics = false, bool $in_environment = false): GetInhabitants
     {
-        return new self(6511, [
-            $id,
-            (int) $item_specifics,
-            (int) $in_environment,
-        ]);
+        return new self($id, $item_specifics, $in_environment);
     }
 
     /**
-     * @return Collection<Inhabitant>
+     * @return RecursiveCollection<Inhabitant>
      */
-    public function dto(): Collection
+    public function createDtoFromResponse(Response $response): RecursiveCollection
     {
-        $inhabitants = $this->json();
+        $item_specifics = $this->recursive($response)->get('item_specifics');
 
-        $item_specifics = collect($this->item_specifics ? array_pop($inhabitants) : []);
+        return $this->recursive($response)->except('item_specifics')->transform(function ($inhabitant) use ($item_specifics) {
+            if ($item_specifics) {
+                $inhabitant = $inhabitant->put('item_specifics', $item_specifics->get($inhabitant->get('item_id')));
+            }
 
-        return collect($inhabitants)->transform(function ($inhabitant) use ($item_specifics) {
-            $inhabitant['item_specifics'] = $item_specifics[$inhabitant['item_id']] ?? null;
-
-            return $this->dto::fromArray($inhabitant);
+            return Inhabitant::fromCollection($inhabitant);
         });
+    }
+
+    protected function defaultQuery(): array
+    {
+        return [
+            'm' => [
+                6511,
+                [
+                    $this->id,
+                    $this->item_specifics,
+                    $this->in_environment,
+                ],
+            ],
+            'X' => time(),
+        ];
     }
 }

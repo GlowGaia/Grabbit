@@ -23,7 +23,7 @@ class Inhabitant extends DTO
         public ?GameSpecifics $game_specifics,
     ) {}
 
-    public static function fromArray($data): static
+    public static function fromCollection($data): static
     {
         return new self(
             name: $data['name'] ?? '',
@@ -35,8 +35,8 @@ class Inhabitant extends DTO
             in_env: (bool) $data['in_env'],
             item_id: (int) $data['item_id'],
             lifespan: (int) $data['lifespan'],
-            item_specifics: $data['item_specifics'] ?? null ? ItemSpecifics::fromArray($data['item_specifics']) : null,
-            game_specifics: $data['game_specifics'] ?? null ? GameSpecifics::fromArray($data['game_specifics']) : null,
+            item_specifics: (! $data->get('item_specifics')) ? null : ItemSpecifics::fromCollection($data->get('item_specifics')),
+            game_specifics: $data['game_specifics'] ?? null ? GameSpecifics::fromCollection($data['game_specifics']) : null,
         );
     }
 }

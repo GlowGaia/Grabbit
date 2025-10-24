@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace GlowGaia\Grabbit\UserEnvironment\Inhabitants;
 
-use GlowGaia\Grabbit\Grabbit;
-use Illuminate\Support\Collection;
+use GlowGaia\Grabbit\GaiaConnector;
 use PHPUnit\Framework\TestCase;
 
 class InhabitantsTest extends TestCase
@@ -16,10 +15,13 @@ class InhabitantsTest extends TestCase
      */
     public function test_it_can_retrieve_user_inhabitants()
     {
-        /** @var Collection<Inhabitant> $inhabitants */
-        $inhabitants = Grabbit::grab(GetInhabitants::byId(7));
+        $gaia = new GaiaConnector;
+        $request = GetInhabitants::byId(7);
 
-        /** @var Inhabitant $inhabitant */
+        $inhabitants = $request->createDtoFromResponse(
+            $gaia->send($request)
+        );
+
         $inhabitant = $inhabitants->get($inhabitants->keys()->get(1));
 
         $this->assertCount(261, $inhabitants);
@@ -29,10 +31,13 @@ class InhabitantsTest extends TestCase
 
     public function test_it_can_retrieve_user_inhabitants_with_item_information()
     {
-        /** @var Collection<Inhabitant> $inhabitants */
-        $inhabitants = Grabbit::grab(GetInhabitants::byId(7, true));
+        $gaia = new GaiaConnector;
+        $request = GetInhabitants::byId(7, true);
 
-        /** @var Inhabitant $inhabitant */
+        $inhabitants = $request->createDtoFromResponse(
+            $gaia->send($request)
+        );
+
         $inhabitant = $inhabitants->first();
 
         $this->assertTrue(isset($inhabitant->item_specifics));

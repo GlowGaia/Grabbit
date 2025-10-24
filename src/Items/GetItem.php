@@ -4,25 +4,44 @@ declare(strict_types=1);
 
 namespace GlowGaia\Grabbit\Items;
 
-use GlowGaia\Grabbit\Shared\GSIOperation;
+use GlowGaia\Grabbit\Shared\Contracts\GSIRequest;
+use GlowGaia\Grabbit\Shared\Helpers\RecursiveCollection;
+use Saloon\Http\Response;
 
-class GetItem extends GSIOperation
+class GetItem extends GSIRequest
 {
-    public function __construct(int $method, ?array $parameters)
-    {
-        parent::__construct($method, $parameters);
+    public function __construct(public int $id) {}
 
-        $this->dto = Item::class;
-        $this->null_dto = NullItem::class;
+    public static function byId(int $id): self
+    {
+        return new self($id);
     }
 
-    public static function byId(int $id): GetItem
+    public function createDtoFromResponse(Response $response): Item
     {
-        return new self(712, [$id]);
+        return Item::fromCollection($this->recursive($response));
     }
 
-    public function setResponse(): void
+    public function hasRequestSucceeded(Response $response): bool
     {
-        $this->response = $this->response[2][0];
+        return $response->json()[0][1] && count($response->json()[0][2]);
+    }
+
+    protected function defaultQuery(): array
+    {
+        return [
+            'm' => [
+                712,
+                [
+                    $this->id,
+                ],
+            ],
+            'X' => time(),
+        ];
+    }
+
+    protected function recursive(Response $response): RecursiveCollection
+    {
+        return RecursiveCollection::recursive($response->collect()[0][2][0]);
     }
 }

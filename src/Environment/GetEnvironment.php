@@ -4,19 +4,26 @@ declare(strict_types=1);
 
 namespace GlowGaia\Grabbit\Environment;
 
-use GlowGaia\Grabbit\Shared\GSIOperation;
+use GlowGaia\Grabbit\Shared\Contracts\GSIRequest;
+use Saloon\Http\Response;
 
-class GetEnvironment extends GSIOperation
+class GetEnvironment extends GSIRequest
 {
-    public function __construct(int $method, ?array $parameters)
+    public function createDtoFromResponse(Response $response): Environment
     {
-        parent::__construct($method, $parameters);
-
-        $this->dto = Environment::class;
+        return Environment::fromCollection($this->recursive($response));
     }
 
-    public static function make(): GetEnvironment
+    protected function defaultQuery(): array
     {
-        return new self(6500, [1]);
+        return [
+            'm' => [
+                6500,
+                [
+                    1,
+                ],
+            ],
+            'X' => time(),
+        ];
     }
 }

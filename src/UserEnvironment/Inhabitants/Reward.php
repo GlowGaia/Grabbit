@@ -17,7 +17,7 @@ class Reward extends DTO
         public int $cap,
     ) {}
 
-    public static function fromArray($data): static
+    public static function fromCollection($data): static
     {
         return new self(
             type: (int) $data['type'],

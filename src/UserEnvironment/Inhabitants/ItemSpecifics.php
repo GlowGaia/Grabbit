@@ -21,7 +21,7 @@ class ItemSpecifics extends DTO
         public string $premium_img,
     ) {}
 
-    public static function fromArray($data): static
+    public static function fromCollection($data): static
     {
         return new self(
             item_id: (int) $data['item_id'],

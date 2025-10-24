@@ -6,6 +6,7 @@ namespace GlowGaia\Grabbit\UserEnvironment;
 
 use DateTimeImmutable;
 use GlowGaia\Grabbit\Shared\Contracts\DTO;
+use GlowGaia\Grabbit\Shared\Helpers\RecursiveCollection;
 use Illuminate\Support\Collection;
 
 class UserEnvironment extends DTO
@@ -25,31 +26,39 @@ class UserEnvironment extends DTO
         public ?string $env_bg_id,
         public DateTimeImmutable $env_last_grant_time,
         public Collection $inhab_retire,
-        public GameInfo|NullGameInfo $game_info,
+        public ?GameInfo $game_info,
     ) {}
 
-    public static function fromArray($data): static
+    public static function fromCollection($data): UserEnvironment
     {
         return new self(
-            serial: (int) $data['serial'],
-            attr_settings: collect($data['attr_settings'])->transform(function ($attribute_setting) {
-                return AttributeSetting::fromArray($attribute_setting);
+            serial: (int) $data->get('serial'),
+            attr_settings: $data->get('attr_settings')->transform(function ($attribute_setting) {
+                return AttributeSetting::fromCollection($attribute_setting);
             }),
-            name: $data['name'],
-            user_id: (int) $data['user_id'],
-            show_in_sig: (bool) $data['show_in_sig'],
-            show_in_profile: (bool) $data['show_in_profile'],
-            last_engine_run: DateTimeImmutable::createFromFormat('U', $data['last_engine_run']),
-            tap_count: (int) $data['tap_count'],
-            view_count: (int) $data['view_count'],
-            total_gold_won: (int) $data['total_gold_won'],
-            env_health: (int) $data['env_health'],
-            env_bg_id: $data['env_bg_id'],
+            name: $data->get('name'),
+            user_id: (int) $data->get('user_id'),
+            show_in_sig: (bool) $data->get('show_in_sig'),
+            show_in_profile: (bool) $data->get('show_in_profile'),
+            last_engine_run: DateTimeImmutable::createFromFormat('U', $data->get('last_engine_run')),
+            tap_count: (int) $data->get('tap_count'),
+            view_count: (int) $data->get('view_count'),
+            total_gold_won: (int) $data->get('total_gold_won'),
+            env_health: (int) $data->get('env_health'),
+            env_bg_id: $data->get('env_bg_id'),
             env_last_grant_time: DateTimeImmutable::createFromFormat('U', $data['env_last_grant_time']),
-            inhab_retire: collect($data['inhab_retire'] ?: [])->map(function ($inhabitant) {
-                return InhabRetire::fromArray($inhabitant);
+            inhab_retire: RecursiveCollection::wrap($data->get('inhab_retire'))->transform(function ($inhabitant) {
+                if (is_bool($inhabitant)) {
+                    return $inhabitant;
+                }
+
+                return InhabRetire::fromCollection($inhabitant);
             }),
-            game_info: isset($data['game_info']) ? GameInfo::fromArray($data['game_info'][1]) : NullGameInfo::fromArray([]),
+            game_info: ($data->get('game_info')) ? GameInfo::fromCollection(
+                RecursiveCollection::wrap(
+                    $data->get('game_info', RecursiveCollection::make())->get(1, RecursiveCollection::make())
+                )
+            ) : null,
         );
     }
 }

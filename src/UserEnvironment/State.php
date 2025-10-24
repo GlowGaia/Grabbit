@@ -10,4 +10,5 @@ enum State: string
     case Active = 'active';
     case Closed = 'closed';
     case Ended = 'ended';
+    case Inactive = '';
 }

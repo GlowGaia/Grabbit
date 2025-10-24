@@ -8,7 +8,6 @@
     <testsuites>
         <testsuite name="Grabbit Tests">
             <directory>./src</directory>
-            <directory>./tests</directory>
         </testsuite>
     </testsuites>
     <source>

@@ -4,20 +4,22 @@ declare(strict_types=1);
 
 namespace GlowGaia\Grabbit\Environment;
 
-use GlowGaia\Grabbit\Grabbit;
+use GlowGaia\Grabbit\GaiaConnector;
 use PHPUnit\Framework\TestCase;
 
 class EnvironmentTest extends TestCase
 {
     public function test_it_can_retrieve_an_environment()
     {
-        /** @var Environment $environment */
-        $environment = Grabbit::grab(GetEnvironment::make());
+        $gaia = new GaiaConnector;
+        $request = GetEnvironment::make();
 
-        /** @var Attribute $food_attribute */
+        $environment = $request->createDtoFromResponse(
+            $gaia->send($request)
+        );
+
         $food_attribute = $environment->attributes->first();
 
-        /** @var Flavor $loamflakes */
         $loamflakes = $food_attribute->flavors->first();
 
         $this->assertEquals('17', $environment->max_inhabitant_count);

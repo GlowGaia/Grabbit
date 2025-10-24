@@ -17,11 +17,6 @@
       "GlowGaia\\Grabbit\\": "src/"
     }
   },
-  "autoload-dev": {
-    "psr-4": {
-      "GlowGaia\\Grabbit\\Tests\\": "tests/"
-    }
-  },
   "require": {
     "saloonphp/saloon": "^3.0",
     "php": "^8.1",

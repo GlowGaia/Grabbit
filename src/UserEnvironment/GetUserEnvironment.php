@@ -4,37 +4,51 @@ declare(strict_types=1);
 
 namespace GlowGaia\Grabbit\UserEnvironment;
 
-use GlowGaia\Grabbit\Shared\GSIOperation;
+use GlowGaia\Grabbit\Shared\Contracts\GSIRequest;
+use GlowGaia\Grabbit\Shared\Helpers\RecursiveCollection;
+use Saloon\Http\Response;
 
-class GetUserEnvironment extends GSIOperation
+class GetUserEnvironment extends GSIRequest
 {
-    private int $id;
-
-    public function __construct(int $method, ?array $parameters)
-    {
-        parent::__construct($method, $parameters);
-
-        $this->id = $parameters[0];
-        $this->dto = UserEnvironment::class;
-        $this->null_dto = NullUserEnvironment::class;
-    }
-
     /**
      * @param  int  $id  - User's Environment ID
      * @param  bool  $location  - true is for editor, false is for profile. (Regarding "message in a bottle" quest, inhab_retire key, etc.)
      * @param  bool  $hide  - Unsure, but false seems to show more information about the above, while true hides it
      */
+    public function __construct(public int $id, public bool $location = false, public bool $hide = true) {}
+
     public static function byId(int $id, bool $location = false, bool $hide = true): GetUserEnvironment
     {
-        return new self(6510, [
-            $id,
-            (int) $location,
-            (int) $hide,
-        ]);
+        return new self($id, $location, $hide);
     }
 
-    public function setResponse(): void
+    public function hasRequestSucceeded(Response $response): bool
     {
-        $this->response = $this->response[2][$this->id];
+        return $response->json()[0][1] && isset($response->json()[0][2][$this->id]);
+    }
+
+    public function createDtoFromResponse(Response $response): UserEnvironment
+    {
+        return UserEnvironment::fromCollection($this->recursive($response));
+    }
+
+    protected function defaultQuery(): array
+    {
+        return [
+            'm' => [
+                6510,
+                [
+                    $this->id,
+                    $this->location,
+                    $this->hide,
+                ],
+            ],
+            'X' => time(),
+        ];
+    }
+
+    protected function recursive(Response $response): RecursiveCollection
+    {
+        return RecursiveCollection::recursive($response->collect()[0][2][$this->id]);
     }
 }

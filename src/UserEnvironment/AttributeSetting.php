@@ -13,7 +13,7 @@ class AttributeSetting extends DTO
         public int $attr_flavor,
     ) {}
 
-    public static function fromArray($data): static
+    public static function fromCollection($data): static
     {
         return new self(
             attr_value: (int) $data['attr_value'] ?? null,
