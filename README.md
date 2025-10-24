@@ -29,59 +29,55 @@ For the supported methods, there will be helper classes for *creating* requests,
 #### Users
 
 You can grab a user by their ID, username, email address, or session ID.  
-In response, you'll be given a `UserDTO` object that closely matches the GSI response data you'd get via GSI method `102`.
+In response, you'll be given a `User` object that closely matches the GSI response data you'd get via GSI method `102`.
 
 ```php
-$lanzer = Grabbit::grab(GetUser::byId(3)); //UserDTO
+$gaia = new GaiaConnector;
+$request = GetUser::byId(3);
+
+$lanzer = $request->createDtoFromResponse(
+    $gaia->send($request)
+);//User (DTO)
 ```
 
 #### Items
 
 You can grab an item by its ID.  
-In response, you'll be given an `ItemDTO` object.
+In response, you'll be given an `Item` object.
 
 ```php
-$angelic_halo = Grabbit::grab(GetItem::byId(1404)); //ItemDTO
+$gaia = new GaiaConnector;
+$request = GetItem::byId(1404);
+
+$angelic_halo = $request->createDtoFromResponse(
+    $gaia->send($request)
+); //Item (DTO)
 ```
 
 #### Aquariums (User Environments)
 You can grab an aquarium by its ID.  
-In response, you'll be given an `AquariumDTO` object.
+In response, you'll be given an `Environment` object.
 
 ```php
-$aquarium = Grabbit::grab(GetUserEnvironment::byId(9116373)); //UserEnvironmentDTO
+$gaia = new GaiaConnector;
+$request = GetUserEnvironment::byId(9116373);
+
+$user_environment = $request->createDtoFromResponse(
+    $gaia->send($request)
+); //UserEnvironment (DTO)
 ```
 
 #### Aquarium Inhabitants
 You can grab an aquarium's inhabitants by the Aquarium ID.  
-In response, you'll be given a `Collection` of `InhabitantDTO` objects.
+In response, you'll be given a `Collection` of `Inhabitant` objects.
 
 ```php
-$inhabitants = Grabbit::grab(GetInhabitants::byId(9116373)); //Collection<InhabitantDTO>
-```
+$gaia = new GaiaConnector;
+$request = GetInhabitants::byId(7);
 
-### Multiple Requests
-
-You can make multiple requests at once by providing an array to the `grab` method.  
-In response, you'll be given a `Collection` of `DTO` objects.
-
-```php
-$aquarium = Grabbit::grab([
-    GetUserEnvironment::byId(9116373),
-    GetInhabitant::byId(9116373),
-]);//Collection<UserEnvironmentDTO, InhabitantDTO>
-```
-
-### Unsupported Methods
-
-Grabbit exists as a wrapper around Saloon. As such, if you need to make GSI requests that are not supported, you can take advantage of the `GSIRequest` class directly.
-
-```php
-$connection = new GaiaConnector();
-$operation = new GSIOperation(2100);
-$request = new GSIRequest(collect([$operation]));
-
-$online_users = $connection->send($request)->json();
+$inhabitants = $request->createDtoFromResponse(
+    $gaia->send($request)
+); //RecursiveCollection<InhabitantDTO>
 ```
 
 ## License
