@@ -19,17 +19,21 @@ readonly class Attribute implements Arrayable, Jsonable, JsonSerializable
     public function __construct(
         public int $id,
         public string $name,
+        public int $min_value,
+        public int $max_value,
         public array $flavors,
     ) {}
 
     /**
      * @param  Flavor[]  $flavors
      */
-    public static function make(int $id, string $name, array $flavors): static
+    public static function make(int $id, string $name, int $min_value, int $max_value, array $flavors): static
     {
         return new self(
             id: $id,
             name: html_entity_decode($name, ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+            min_value: $min_value,
+            max_value: $max_value,
             flavors: $flavors,
         );
     }
@@ -46,6 +50,8 @@ readonly class Attribute implements Arrayable, Jsonable, JsonSerializable
         return static::make(
             id: $id,
             name: isset($data['name']) ? (string) $data['name'] : 'Unknown',
+            min_value: isset($data['min_value']) ? (int) $data['min_value'] : 0,
+            max_value: isset($data['max_value']) ? (int) $data['max_value'] : 0,
             flavors: $flavors,
         );
     }
@@ -55,6 +61,8 @@ readonly class Attribute implements Arrayable, Jsonable, JsonSerializable
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'min_value' => $this->min_value,
+            'max_value' => $this->max_value,
             'flavors' => array_map(fn (Flavor $flavor) => $flavor->toArray(), $this->flavors),
         ];
     }
