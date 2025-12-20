@@ -1,3 +1,5 @@
 /vendor
 /.idea
-**/.DS_Store
+**/.DS_Store.phpunit.result.cache
+.DS_Store
+.phpunit.result.cache

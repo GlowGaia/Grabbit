@@ -19,7 +19,6 @@ class GetUser extends GSIRequest
     public static function byUsername(string $username): self
     {
         if (is_numeric($username) && str_contains($username, '.')) {
-            // 3.14 becomes 3-14
             $username = str_replace('.', '-', $username);
         }
 
@@ -38,7 +37,7 @@ class GetUser extends GSIRequest
 
     public function createDtoFromResponse(Response $response): User
     {
-        return User::fromCollection($this->recursive($response));
+        return User::fromArray($this->validateResponse($response));
     }
 
     protected function defaultQuery(): array

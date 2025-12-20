@@ -5,11 +5,18 @@ declare(strict_types=1);
 namespace GlowGaia\Grabbit\Users;
 
 use GlowGaia\Grabbit\GaiaConnector;
-use LogicException;
+use GlowGaia\Grabbit\Shared\Exceptions\GSIRequestException;
 use PHPUnit\Framework\TestCase;
+use Saloon\Exceptions\Request\FatalRequestException;
+use Saloon\Exceptions\Request\RequestException;
 
 class UserTest extends TestCase
 {
+    /**
+     * @throws FatalRequestException
+     * @throws GSIRequestException
+     * @throws RequestException
+     */
     public function test_it_can_retrieve_a_user_by_id()
     {
         $gaia = new GaiaConnector;
@@ -22,6 +29,11 @@ class UserTest extends TestCase
         $this->assertEquals('Lanzer', $user->username);
     }
 
+    /**
+     * @throws FatalRequestException
+     * @throws GSIRequestException
+     * @throws RequestException
+     */
     public function test_it_can_retrieve_a_user_by_username()
     {
         $gaia = new GaiaConnector;
@@ -34,6 +46,11 @@ class UserTest extends TestCase
         $this->assertEquals(3, $user->gaia_id);
     }
 
+    /**
+     * @throws FatalRequestException
+     * @throws GSIRequestException
+     * @throws RequestException
+     */
     public function test_it_can_retrieve_a_user_by_email()
     {
         $gaia = new GaiaConnector;
@@ -46,6 +63,11 @@ class UserTest extends TestCase
         $this->assertEquals('Lanzer', $user->username);
     }
 
+    /**
+     * @throws FatalRequestException
+     * @throws GSIRequestException
+     * @throws RequestException
+     */
     public function test_it_can_handle_weird_usernames()
     {
         $gaia = new GaiaConnector;
@@ -64,13 +86,20 @@ class UserTest extends TestCase
         $this->assertEquals(58812, $second_user->gaia_id);
     }
 
+    /**
+     * @throws FatalRequestException
+     * @throws GSIRequestException
+     * @throws RequestException
+     */
     public function test_it_throws_an_exception_if_user_is_not_found()
     {
         $gaia = new GaiaConnector;
+
         $nonexistent_user_request = GetUser::byId(1);
 
-        $this->expectException(LogicException::class);
+        $this->expectException(GSIRequestException::class);
 
-        $gaia->send($nonexistent_user_request)->dtoOrFail();
+        $response = $gaia->send($nonexistent_user_request);
+        $nonexistent_user_request->createDtoFromResponse($response);
     }
 }

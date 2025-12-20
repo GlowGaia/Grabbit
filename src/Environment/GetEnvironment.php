@@ -11,7 +11,7 @@ class GetEnvironment extends GSIRequest
 {
     public function createDtoFromResponse(Response $response): Environment
     {
-        return Environment::fromCollection($this->recursive($response));
+        return Environment::fromArray($this->validateResponse($response));
     }
 
     protected function defaultQuery(): array

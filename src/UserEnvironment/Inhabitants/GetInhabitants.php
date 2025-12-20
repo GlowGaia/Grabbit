@@ -5,16 +5,10 @@ declare(strict_types=1);
 namespace GlowGaia\Grabbit\UserEnvironment\Inhabitants;
 
 use GlowGaia\Grabbit\Shared\Contracts\GSIRequest;
-use GlowGaia\Grabbit\Shared\Helpers\RecursiveCollection;
 use Saloon\Http\Response;
 
 class GetInhabitants extends GSIRequest
 {
-    /**
-     * @param  int  $id  - User Environment ID
-     * @param  bool  $item_specifics  - Adds a key to the array that lists item information for each inhabitant item_id
-     * @param  bool  $in_environment  - Filter inhabitants to only the ones currently in the user's environment
-     */
     public function __construct(
         public int $id,
         public bool $item_specifics = true,
@@ -27,19 +21,32 @@ class GetInhabitants extends GSIRequest
     }
 
     /**
-     * @return RecursiveCollection<Inhabitant>
+     * @return Inhabitant[]
      */
-    public function createDtoFromResponse(Response $response): RecursiveCollection
+    public function createDtoFromResponse(Response $response): array
     {
-        $item_specifics = $this->recursive($response)->get('item_specifics');
+        $data = $this->validateResponse($response);
+        $payload = $data[0][2] ?? [];
 
-        return $this->recursive($response)->except('item_specifics')->transform(function ($inhabitant) use ($item_specifics) {
-            if ($item_specifics) {
-                $inhabitant = $inhabitant->put('item_specifics', $item_specifics->get($inhabitant->get('item_id')));
+        $itemSpecificsSource = $payload['item_specifics'] ?? [];
+
+        $inhabitants = [];
+        foreach ($payload as $key => $node) {
+            if ($key === 'item_specifics' || ! is_array($node)) {
+                continue;
             }
 
-            return Inhabitant::fromCollection($inhabitant);
-        });
+            if ($this->item_specifics && isset($node['item_id'])) {
+                $itemId = (string) $node['item_id'];
+                if (isset($itemSpecificsSource[$itemId])) {
+                    $node['item_specifics'] = $itemSpecificsSource[$itemId];
+                }
+            }
+
+            $inhabitants[] = Inhabitant::fromArray($node);
+        }
+
+        return $inhabitants;
     }
 
     protected function defaultQuery(): array

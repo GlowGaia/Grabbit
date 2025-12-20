@@ -5,13 +5,21 @@ declare(strict_types=1);
 namespace GlowGaia\Grabbit\UserEnvironment\Inhabitants;
 
 use GlowGaia\Grabbit\GaiaConnector;
+use GlowGaia\Grabbit\Shared\Exceptions\GSIRequestException;
 use PHPUnit\Framework\TestCase;
+use Saloon\Exceptions\Request\FatalRequestException;
+use Saloon\Exceptions\Request\RequestException;
 
 class InhabitantsTest extends TestCase
 {
     /**
      * Chuckp2 hasn't logged into Gaia since 2016. As much as I miss him,
      * I hope he doesn't break my tests
+     */
+    /**
+     * @throws FatalRequestException
+     * @throws GSIRequestException
+     * @throws RequestException
      */
     public function test_it_can_retrieve_user_inhabitants()
     {
@@ -22,13 +30,18 @@ class InhabitantsTest extends TestCase
             $gaia->send($request)
         );
 
-        $inhabitant = $inhabitants->get($inhabitants->keys()->get(1));
+        $inhabitant = $inhabitants[1];
 
         $this->assertCount(261, $inhabitants);
         $this->assertEquals('Steve', $inhabitant->name);
-        $this->assertFalse(isset($inhabitant->item_specifics));
+        $this->assertNull($inhabitant->item_specifics);
     }
 
+    /**
+     * @throws FatalRequestException
+     * @throws GSIRequestException
+     * @throws RequestException
+     */
     public function test_it_can_retrieve_user_inhabitants_with_item_information()
     {
         $gaia = new GaiaConnector;
@@ -38,9 +51,9 @@ class InhabitantsTest extends TestCase
             $gaia->send($request)
         );
 
-        $inhabitant = $inhabitants->first();
+        $inhabitant = $inhabitants[0];
 
-        $this->assertTrue(isset($inhabitant->item_specifics));
+        $this->assertNotNull($inhabitant->item_specifics);
         $this->assertEquals('Aquarium Banggai Cardinal', $inhabitant->item_specifics->name);
     }
 }

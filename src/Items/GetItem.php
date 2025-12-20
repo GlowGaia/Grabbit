@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace GlowGaia\Grabbit\Items;
 
 use GlowGaia\Grabbit\Shared\Contracts\GSIRequest;
-use GlowGaia\Grabbit\Shared\Helpers\RecursiveCollection;
 use Saloon\Http\Response;
 
 class GetItem extends GSIRequest
@@ -19,12 +18,13 @@ class GetItem extends GSIRequest
 
     public function createDtoFromResponse(Response $response): Item
     {
-        return Item::fromCollection($this->recursive($response));
-    }
+        $data = $this->validateResponse($response);
 
-    public function hasRequestSucceeded(Response $response): bool
-    {
-        return $response->json()[0][1] && count($response->json()[0][2]);
+        if (! isset($data[0][2][0]['item_id'])) {
+            throw new ItemNotFoundException($response, $this->id);
+        }
+
+        return Item::fromArray($data);
     }
 
     protected function defaultQuery(): array
@@ -38,10 +38,5 @@ class GetItem extends GSIRequest
             ],
             'X' => time(),
         ];
-    }
-
-    protected function recursive(Response $response): RecursiveCollection
-    {
-        return RecursiveCollection::recursive($response->collect()[0][2][0]);
     }
 }
