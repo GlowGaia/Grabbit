@@ -20,6 +20,7 @@ readonly class UserEnvironment implements Arrayable, Jsonable, JsonSerializable
      * @param  array<int, InhabRetire|bool>  $inhab_retire
      */
     public function __construct(
+        public int $id,
         public int $serial,
         public array $attr_settings,
         public ?string $name,
@@ -42,6 +43,7 @@ readonly class UserEnvironment implements Arrayable, Jsonable, JsonSerializable
      * @param  array<int, InhabRetire|bool>  $inhab_retire
      */
     public static function make(
+        int $id,
         int $serial,
         array $attr_settings,
         ?string $name,
@@ -59,6 +61,7 @@ readonly class UserEnvironment implements Arrayable, Jsonable, JsonSerializable
         ?GameInfo $game_info,
     ): static {
         return new self(
+            id: $id,
             serial: $serial,
             attr_settings: $attr_settings,
             name: $name,
@@ -101,26 +104,27 @@ readonly class UserEnvironment implements Arrayable, Jsonable, JsonSerializable
         }
 
         try {
-            $lastRun = new DateTimeImmutable('@'.($data['last_engine_run'] ?? 0));
-            $lastGrant = new DateTimeImmutable('@'.($data['env_last_grant_time'] ?? 0));
+            $last_run = new DateTimeImmutable('@'.($data['last_engine_run'] ?? 0));
+            $last_grant = new DateTimeImmutable('@'.($data['env_last_grant_time'] ?? 0));
         } catch (Exception) {
-            $lastRun = $lastGrant = new DateTimeImmutable('@0');
+            $last_run = $last_grant = new DateTimeImmutable('@0');
         }
 
         return static::make(
+            id: (int) ($data['id'] ?? 0),
             serial: (int) ($data['serial'] ?? 0),
             attr_settings: $attr_settings,
             name: isset($data['name']) ? (string) $data['name'] : null,
             user_id: (int) ($data['user_id'] ?? 0),
             show_in_sig: (bool) (int) ($data['show_in_sig'] ?? 0),
             show_in_profile: (bool) (int) ($data['show_in_profile'] ?? 0),
-            last_engine_run: $lastRun,
+            last_engine_run: $last_run,
             tap_count: (int) ($data['tap_count'] ?? 0),
             view_count: (int) ($data['view_count'] ?? 0),
             total_gold_won: (int) ($data['total_gold_won'] ?? 0),
             env_health: (int) ($data['env_health'] ?? 0),
             env_bg_id: isset($data['env_bg_id']) ? (string) $data['env_bg_id'] : null,
-            env_last_grant_time: $lastGrant,
+            env_last_grant_time: $last_grant,
             inhab_retire: $inhab_retire,
             game_info: $game_info,
         );
@@ -129,6 +133,7 @@ readonly class UserEnvironment implements Arrayable, Jsonable, JsonSerializable
     public function toArray(): array
     {
         return [
+            'id' => $this->id,
             'serial' => $this->serial,
             'attr_settings' => array_map(fn (AttributeSetting $s) => $s->toArray(), $this->attr_settings),
             'name' => $this->name,

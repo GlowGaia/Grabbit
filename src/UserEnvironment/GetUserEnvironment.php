@@ -10,9 +10,9 @@ use Saloon\Http\Response;
 class GetUserEnvironment extends GSIRequest
 {
     /**
-     * @param  int  $id  - User's Environment ID
-     * @param  bool  $location  - true is for editor, false is for profile.
-     * @param  bool  $hide  - Unsure, but false seems to show more information about the above, while true hides it
+     * @param  int   $id - User's Environment ID
+     * @param  bool  $location - true is for editor, false is for profile.
+     * @param  bool  $hide - Unsure, but false seems to show more information about the above, while true hides it
      */
     public function __construct(
         public int $id,
@@ -39,7 +39,10 @@ class GetUserEnvironment extends GSIRequest
             );
         }
 
-        return UserEnvironment::fromArray($data[0][2][$this->id]);
+        $env_data = $data[0][2][$this->id];
+        $env_data['id'] = $this->id;
+
+        return UserEnvironment::fromArray($env_data);
     }
 
     protected function defaultQuery(): array
