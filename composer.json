@@ -16,7 +16,7 @@
     ],
     "require-dev": {
         "tightenco/duster": "^3.4",
-        "phpunit/phpunit": "^13",
+        "phpunit/phpunit": "^13.1.6",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-strict-rules": "^2.0"
     },
