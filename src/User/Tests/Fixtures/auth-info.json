@@ -1,0 +1,25 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Mon, 13 Apr 2026 23:57:10 GMT",
+        "Content-Type": "application\/json",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "Server": "Apache",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "X-XSS-Protection": "1; mode=block",
+        "Permissions-Policy": "geolocation=(), microphone=(), camera=()",
+        "X-Gaia-GSI-Call": "107",
+        "X-Gaia-Process-Time": "0.014",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PUT",
+        "Access-Control-Max-Age": "1000",
+        "Access-Control-Allow-Headers": "x-requested-with, Content-Type, origin, authorization, accept, client-security-token",
+        "Vary": "Accept-Encoding",
+        "Accept-Ranges": "none"
+    },
+    "data": "[[\"107\",true,{\"gaia_id\":37285493,\"username\":\"Sight Ninja\",\"avatar\":\"ava\\\/75\\\/ee\\\/555b405c238ee75_M_6_11_1774056875\",\"user_level\":8,\"filter_level\":0,\"server_id\":-1,\"sushi_id\":-1,\"session_id\":-1,\"room_id\":-1,\"user_active\":1,\"user_pms\":0,\"user_posts\":6979,\"towns_address\":0,\"avatar_url\":\"https:\\\/\\\/a1cdn.gaiaonline.com\\\/dress-up\\\/avatar\\\/ava\\\/75\\\/ee\\\/555b405c238ee75_flip.png?t=1774056874_6_11\",\"account_age\":4230,\"gender\":\"Male\"}]]",
+    "context": []
+}

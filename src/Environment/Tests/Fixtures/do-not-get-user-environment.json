@@ -1,0 +1,25 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Sun, 19 Apr 2026 10:26:22 GMT",
+        "Content-Type": "application\/json",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "Server": "Apache",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "X-XSS-Protection": "1; mode=block",
+        "Permissions-Policy": "geolocation=(), microphone=(), camera=()",
+        "X-Gaia-GSI-Call": "6510",
+        "X-Gaia-Process-Time": "0.007",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PUT",
+        "Access-Control-Max-Age": "1000",
+        "Access-Control-Allow-Headers": "x-requested-with, Content-Type, origin, authorization, accept, client-security-token",
+        "Vary": "Accept-Encoding",
+        "Accept-Ranges": "none"
+    },
+    "data": "[[\"6510\",true,[]]]",
+    "context": []
+}

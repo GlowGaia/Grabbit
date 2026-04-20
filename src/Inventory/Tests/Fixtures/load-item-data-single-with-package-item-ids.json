@@ -1,0 +1,25 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Mon, 20 Apr 2026 03:12:50 GMT",
+        "Content-Type": "application\/json",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "Server": "Apache",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "X-XSS-Protection": "1; mode=block",
+        "Permissions-Policy": "geolocation=(), microphone=(), camera=()",
+        "X-Gaia-GSI-Call": "712",
+        "X-Gaia-Process-Time": "0.025",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PUT",
+        "Access-Control-Max-Age": "1000",
+        "Access-Control-Allow-Headers": "x-requested-with, Content-Type, origin, authorization, accept, client-security-token",
+        "Vary": "Accept-Encoding",
+        "Accept-Ranges": "none"
+    },
+    "data": "[[\"712\",true,[{\"keywords\":\"super konpeito bundle\",\"average\":10636700000000,\"minimum\":\"10500000000000\",\"listings\":null,\"deviation\":\"-1.7247\",\"name\":\"Super Konpeito Bundle\",\"description\":\"This bundle contains: Sweet Spring Trellis, Sugary Fuwa Fuwa, A Very Sweet Yandere Birthday, Konpeito Keijuku, DAVlD's WAIFU, Smol Candy Ruffian, The Candied Lantern Handler, I am Sweet Flowers, Candied Mourning Glory, Candied Despair, Sweet Usa Usa Chan, Konpeito Blissful Healing, Candied Lunar Rabbit, Candied Just a Jest, I am Candied Witch and the new Candied Flowerfall, Konpeito Fairy Biancamella and Konpeito Fairy Blanchella!<br\\\/><br\\\/><img src=\\\"https:\\\/\\\/u1cdn.gaiaonline.com\\\/mfs\\\/index\\\/adminupload\\\/b1810c923e5a.png\\\">\",\"thumbnail\":\"202306_konpeito_bundle_thb.png\",\"thumbfile\":\"new\\\/9c\\\/9c4aa2c4a86993.png?v=536\",\"class\":\"\",\"type\":\"package\",\"sub_type\":\"\",\"price\":\"0\",\"gpass\":\"9999\",\"store_id\":\"0\",\"trade_ignore\":\"0\",\"is_released\":\"1\",\"sellback_ignore\":\"0\",\"variation_ids\":[],\"created\":\"2023-05-02\",\"item_id\":\"11037075\",\"package_item_ids\":[\"10889796\",\"10787625\",\"10796496\",\"10690845\",\"10695348\",\"10956807\",\"10911609\",\"10918143\",\"10864575\",\"10950342\",\"10829904\",\"10896009\",\"10637934\",\"10901301\",\"10986672\",\"11024223\",\"11033010\",\"11033049\"]}]]]",
+    "context": []
+}

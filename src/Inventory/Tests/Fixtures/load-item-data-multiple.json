@@ -1,0 +1,25 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Tue, 14 Apr 2026 02:04:31 GMT",
+        "Content-Type": "application\/json",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "Server": "Apache",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "X-XSS-Protection": "1; mode=block",
+        "Permissions-Policy": "geolocation=(), microphone=(), camera=()",
+        "X-Gaia-GSI-Call": "712",
+        "X-Gaia-Process-Time": "0.019",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PUT",
+        "Access-Control-Max-Age": "1000",
+        "Access-Control-Allow-Headers": "x-requested-with, Content-Type, origin, authorization, accept, client-security-token",
+        "Vary": "Accept-Encoding",
+        "Accept-Ranges": "none"
+    },
+    "data": "[[\"712\",true,[{\"keywords\":\"angelic halo gold yellow collectible fantasy premiummc june 2003\",\"average\":259425000000000,\"minimum\":{\"10016121\":\"2700000000000\",\"1404\":\"259500000000000\"},\"listings\":\"19\",\"deviation\":\"1.67702\",\"name\":\"Angelic Halo\",\"description\":\"Those who are selfless and giving are often mistaken for angels -- the halo is the true mark of this angelic race.\",\"thumbnail\":\"m_head_69_thb.png\",\"thumbfile\":\"7620e03a57c.png\",\"class\":\"\",\"type\":\"equip_head\",\"sub_type\":\"\",\"price\":\"0\",\"gpass\":\"40000\",\"store_id\":\"0\",\"trade_ignore\":\"0\",\"is_released\":\"1\",\"sellback_ignore\":\"0\",\"variation_ids\":[],\"created\":\"2017-02-10\",\"item_id\":\"1404\"},{\"keywords\":\"Ring: Buddy Call\",\"average\":null,\"minimum\":{\"10016121\":\"2700000000000\",\"1404\":\"259500000000000\"},\"listings\":null,\"name\":\"Ring: Buddy Call\",\"description\":\"Summon a member of your crew to your location from anywhere else in the world.\",\"thumbnail\":\"ring_buddy_call.png\",\"thumbfile\":\"256802fc4552.png\",\"class\":\"\",\"type\":\"battle\",\"sub_type\":\"ring\",\"price\":\"1\",\"gpass\":\"200\",\"store_id\":\"0\",\"trade_ignore\":\"1\",\"is_released\":\"1\",\"sellback_ignore\":\"0\",\"variation_ids\":[],\"created\":\"2008-02-01\",\"item_id\":\"17746\"}]]]",
+    "context": []
+}

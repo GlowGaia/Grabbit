@@ -1,34 +1,36 @@
 {
-  "name": "glowgaia/grabbit",
-  "description": "An extremely specific wrapper around Laravel's Illuminate HTTP Client that allows for short and expressive requests to Gaia Online's GSI API",
-  "type": "library",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Sheldon Corcoran",
-      "email": "awesomolocity@gmail.com"
-    }
-  ],
-  "autoload": {
-    "classmap": [
-      "src/"
+    "name": "glowgaia/grabbit",
+    "description": "A SaloonPHP-based SDK for Gaia Online's GSI API",
+    "type": "library",
+    "license": "MPL-2.0",
+    "autoload": {
+        "psr-4": {
+            "GlowGaia\\Grabbit\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sheldon Corcoran",
+            "email": "awesomolocity@gmail.com"
+        }
     ],
-    "psr-4": {
-      "GlowGaia\\Grabbit\\": "src/"
+    "require-dev": {
+        "tightenco/duster": "^3.4",
+        "phpunit/phpunit": "^13",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-strict-rules": "^2.0"
+    },
+    "require": {
+        "saloonphp/saloon": "^4.0",
+        "illuminate/support": "^13.4",
+        "illuminate/collections": "^13.4",
+        "symfony/serializer": "^8.0",
+        "symfony/property-access": "^8.0"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "duster:lint": "vendor/bin/duster lint",
+        "duster:fix": "vendor/bin/duster fix",
+        "phpstan": "vendor/bin/phpstan analyse --memory-limit=512M"
     }
-  },
-  "require": {
-    "saloonphp/saloon": "^3.0",
-    "php": "^8.2",
-    "illuminate/collections": "^12.28"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^12",
-    "tightenco/duster": "^3.2"
-  },
-  "scripts": {
-    "test": "./vendor/bin/phpunit",
-    "duster:fix": "./vendor/bin/duster fix",
-    "duster:lint" : "./vendor/bin/duster lint"
-  }
 }

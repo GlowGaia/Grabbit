@@ -1,0 +1,25 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Wed, 15 Apr 2026 09:22:13 GMT",
+        "Content-Type": "application\/json",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "Server": "Apache",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "X-XSS-Protection": "1; mode=block",
+        "Permissions-Policy": "geolocation=(), microphone=(), camera=()",
+        "X-Gaia-GSI-Call": "6510",
+        "X-Gaia-Process-Time": "0.018",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PUT",
+        "Access-Control-Max-Age": "1000",
+        "Access-Control-Allow-Headers": "x-requested-with, Content-Type, origin, authorization, accept, client-security-token",
+        "Vary": "Accept-Encoding",
+        "Accept-Ranges": "none"
+    },
+    "data": "[[\"6510\",true,{\"9116373\":{\"serial\":\"3461552054\",\"attr_settings\":{\"1\":{\"attr_value\":null,\"attr_flavor\":\"24\"},\"2\":{\"attr_value\":null,\"attr_flavor\":\"5\"},\"3\":{\"attr_value\":null,\"attr_flavor\":\"7\"},\"4\":{\"attr_value\":null,\"attr_flavor\":\"13\"}},\"name\":\"Tide Of Terror\",\"user_id\":\"37285493\",\"show_in_sig\":\"1\",\"show_in_profile\":0,\"last_engine_run\":\"1776237058\",\"tap_count\":\"9\",\"view_count\":\"15\",\"total_gold_won\":\"2155876147\",\"env_health\":\"32466\",\"env_bg_id\":null,\"env_last_grant_time\":\"1776237058\",\"inhab_retire\":false,\"game_info\":{\"1\":{\"type\":1,\"instance_id\":\"975996568.1776237066.1046201514\",\"open_time\":1776244571,\"close_time\":1776245531,\"end_time\":1776245591,\"length\":60,\"results_time\":1776245601,\"state\":\"open\",\"player_count\":0}}}}]]",
+    "context": []
+}

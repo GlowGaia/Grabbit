@@ -1,0 +1,25 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Mon, 13 Apr 2026 22:29:56 GMT",
+        "Content-Type": "application\/json",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "Server": "Apache",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "X-XSS-Protection": "1; mode=block",
+        "Permissions-Policy": "geolocation=(), microphone=(), camera=()",
+        "X-Gaia-GSI-Call": "102",
+        "X-Gaia-Process-Time": "0.008",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PUT",
+        "Access-Control-Max-Age": "1000",
+        "Access-Control-Allow-Headers": "x-requested-with, Content-Type, origin, authorization, accept, client-security-token",
+        "Vary": "Accept-Encoding",
+        "Accept-Ranges": "none"
+    },
+    "data": "[[\"102\",true,{\"gaia_id\":3,\"username\":\"Lanzer\",\"avatar\":\"ava\\\/33\\\/20\\\/3bdc12033_M_6_00_1765931783\",\"user_level\":201,\"filter_level\":0,\"server_id\":-1,\"sushi_id\":-1,\"session_id\":-1,\"room_id\":-1,\"user_active\":1,\"user_pms\":13,\"user_posts\":16429,\"towns_address\":181136944,\"avatar_url\":\"https:\\\/\\\/a1cdn.gaiaonline.com\\\/dress-up\\\/avatar\\\/ava\\\/33\\\/20\\\/3bdc12033_flip.png?t=1765931782_6_00&pl=1494;\",\"account_age\":8454,\"gender\":\"Male\"}]]",
+    "context": []
+}

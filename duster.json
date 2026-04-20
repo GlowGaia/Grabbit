@@ -1,0 +1,14 @@
+{
+    "exclude": [
+        ".idea"
+    ],
+    "scripts": {
+        "lint": {
+            "phpstan": [
+                "./vendor/bin/phpstan",
+                "analyse",
+                "--memory-limit=512M"
+            ]
+        }
+    }
+}

@@ -1,8 +1,7 @@
 {
-  "preset": "laravel",
-  "rules": {
-    "php_unit_test_annotation": {
-      "style": "prefix"
+    "preset": "empty",
+    "rules": {
+        "@PER-CS": true,
+        "declare_strict_types": true
     }
-  }
 }
