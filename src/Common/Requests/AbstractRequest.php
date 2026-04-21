@@ -71,6 +71,17 @@ abstract class AbstractRequest extends Request implements HasBody
     }
 
     /**
+     * @return array<string, mixed>
+     * @throws JsonException
+     */
+    public function data(Response $response): array
+    {
+        assert($response instanceof GSIResponse);
+
+        return $response->data();
+    }
+
+    /**
      * @param  array<string,mixed>  $data
      * @return T
      */
@@ -97,15 +108,4 @@ abstract class AbstractRequest extends Request implements HasBody
 
     /** @return class-string<T> */
     abstract protected function dto(): string;
-
-    /**
-     * @return array<string, mixed>
-     * @throws JsonException
-     */
-    public function data(Response $response): array
-    {
-        assert($response instanceof GSIResponse);
-
-        return $response->data();
-    }
 }
