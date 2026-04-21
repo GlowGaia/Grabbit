@@ -1,0 +1,25 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Tue, 21 Apr 2026 06:49:20 GMT",
+        "Content-Type": "application\/json",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "Server": "Apache",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "X-XSS-Protection": "1; mode=block",
+        "Permissions-Policy": "geolocation=(), microphone=(), camera=()",
+        "X-Gaia-GSI-Call": "712",
+        "X-Gaia-Process-Time": "0.024",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PUT",
+        "Access-Control-Max-Age": "1000",
+        "Access-Control-Allow-Headers": "x-requested-with, Content-Type, origin, authorization, accept, client-security-token",
+        "Vary": "Accept-Encoding",
+        "Accept-Ranges": "none"
+    },
+    "data": "[[\"712\",true,[{\"keywords\":\"ii pariah ancient katana july 2006 06 jul japan weapon ninja sword premium usermade iipariahii black gold\",\"average\":431601000000,\"minimum\":null,\"listings\":\"4\",\"deviation\":\"97.8452\",\"name\":\"ii pariah ii's katana\",\"description\":\"the sword ii pariah ii used in the grate war with the help of Isadboys\",\"thumbnail\":\"m_item_51rm1_thb.png\",\"thumbfile\":\"5b6500b39ebc27.png\",\"class\":\"\",\"type\":\"equip_item\",\"sub_type\":\"\",\"price\":\"0\",\"gpass\":\"0\",\"store_id\":\"0\",\"trade_ignore\":\"0\",\"is_released\":\"1\",\"sellback_ignore\":\"0\",\"variation_ids\":[\"10402857\",\"10402859\",\"10402861\",\"10402863\",\"10402865\"],\"created\":\"2017-08-03\",\"item_id\":\"10402855\"}]]]",
+    "context": []
+}
