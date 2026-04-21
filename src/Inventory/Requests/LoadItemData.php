@@ -10,12 +10,19 @@ declare(strict_types=1);
 
 namespace GlowGaia\Grabbit\Inventory\Requests;
 
+use GlowGaia\Grabbit\Common\Helpers\CollectionNormalizer;
 use GlowGaia\Grabbit\Common\Requests\AbstractRequest;
 use GlowGaia\Grabbit\Common\Responses\GSIResponse;
 use GlowGaia\Grabbit\Inventory\DTOs\Item;
 use Illuminate\Support\Collection;
 use JsonException;
 use Saloon\Http\Response;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+use Symfony\Component\Serializer\Normalizer\BackedEnumNormalizer;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * Loads item information for given item ids
@@ -67,5 +74,18 @@ final class LoadItemData extends AbstractRequest
     protected function dto(): string
     {
         return Item::class;
+    }
+
+    protected function serializer(): Serializer
+    {
+        return new Serializer([
+            new DateTimeNormalizer([
+                DateTimeNormalizer::FORMAT_KEY => 'Y-m-d',
+            ]),
+            new CollectionNormalizer(),
+            new BackedEnumNormalizer(),
+            new ObjectNormalizer(),
+            new ArrayDenormalizer(),
+        ], [new JsonEncoder()]);
     }
 }

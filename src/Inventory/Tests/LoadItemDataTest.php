@@ -123,4 +123,32 @@ final class LoadItemDataTest extends AbstractInventoryTestCase
         $this->assertEquals('Super Konpeito Bundle', $item->name);
         $this->assertCount(18, $item->package_item_ids);
     }
+
+    /**
+     * @throws FatalRequestException | RequestException
+     */
+    #[Test]
+    public function it_maps_created_date_correctly(): void
+    {
+        $mockClient = new MockClient([
+            LoadItemData::class => MockResponse::fixture(
+                'load-item-data-created-date',
+            ),
+        ]);
+
+        $connector = new GSIConnector();
+        $connector->withMockClient($mockClient);
+
+        $response = $connector->inventory()->loadItemData(10402855);
+
+        /** @var Collection<int, Item> $items */
+        $items = $response->dto();
+        $item = $items->first();
+        $this->assertNotNull($item);
+
+        $this->assertEquals(
+            '2017-08-03',
+            $item->created->format('Y-m-d'),
+        );
+    }
 }
