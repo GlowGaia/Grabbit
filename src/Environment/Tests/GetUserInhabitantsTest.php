@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace GlowGaia\Grabbit\Environment\Tests;
 
+use DateTimeImmutable;
 use GlowGaia\Grabbit\Common\Connectors\GSIConnector;
 use GlowGaia\Grabbit\Environment\DTOs\Inhabitant;
 use GlowGaia\Grabbit\Environment\Requests\GetUserInhabitants;
@@ -50,6 +51,21 @@ class GetUserInhabitantsTest extends AbstractEnvironmentTestCase
         $this->assertCount(20, $inhabitants);
 
         $this->assertEquals('TestC', $inhabitant->name);
+
+        $this->assertEquals(
+            new DateTimeImmutable('@1486092130'),
+            $inhabitant->inhab_incept,
+        );
+
+        $this->assertEquals(
+            new DateTimeImmutable('@1728296075'),
+            $inhabitant->inhab_expires,
+        );
+
+        $this->assertEquals(
+            new DateTimeImmutable('@1719924061'),
+            $inhabitant->inhab_cryo,
+        );
 
         $this->assertNotNull($inhabitant->item_specifics);
         $this->assertEquals(
