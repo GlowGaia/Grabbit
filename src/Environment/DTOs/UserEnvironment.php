@@ -16,6 +16,11 @@ use Illuminate\Support\Collection;
 
 final class UserEnvironment extends AbstractDTO
 {
+    public ?GameInfo $game_info;
+
+    /**
+     * @param  array<string, mixed>|null  $game_info
+     */
     public function __construct(
         public int $id,
         public int $serial,
@@ -36,7 +41,14 @@ final class UserEnvironment extends AbstractDTO
         public Collection $inhab_retire,
         public ?bool $has_quest,
         public ?MessageCenter $message_center,
-        public ?GameInfo $game_info,
+        ?array $game_info,
         public ?SpecialOffer $special_offer,
-    ) {}
+    ) {
+        $this->game_info = $game_info
+            ? UserEnvironment::serializer()->denormalize(
+                collect($game_info)->first(),
+                GameInfo::class,
+            )
+            : null;
+    }
 }

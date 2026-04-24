@@ -45,6 +45,12 @@ class GetUserEnvironmentTest extends AbstractEnvironmentTestCase
         $this->assertEquals('Tide Of Terror', $user_environment->name);
 
         $this->assertCount(4, $user_environment->attr_settings);
+
+        $this->assertNotNull($user_environment->game_info);
+        $this->assertEquals(
+            'ended',
+            $user_environment->game_info->state->value,
+        );
     }
 
     /**
