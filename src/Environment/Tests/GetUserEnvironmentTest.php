@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace GlowGaia\Grabbit\Environment\Tests;
 
+use DateTimeImmutable;
 use GlowGaia\Grabbit\Common\Connectors\GSIConnector;
 use GlowGaia\Grabbit\Environment\DTOs\UserEnvironment;
 use GlowGaia\Grabbit\Environment\Exceptions\UserEnvironmentNotFoundException;
@@ -50,6 +51,10 @@ class GetUserEnvironmentTest extends AbstractEnvironmentTestCase
         $this->assertEquals(
             'ended',
             $user_environment->game_info->state->value,
+        );
+        $this->assertEquals(
+            new DateTimeImmutable('@1777065687'),
+            $user_environment->game_info->open_time,
         );
     }
 

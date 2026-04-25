@@ -39,13 +39,13 @@ abstract class AbstractDTO implements Arrayable, Jsonable, JsonSerializable
     protected static function serializer(): Serializer
     {
         return new Serializer([
+            new DateTimeNormalizer([
+                DateTimeNormalizer::FORMAT_KEY => 'U',
+            ]),
             new CollectionNormalizer(),
             new BackedEnumNormalizer(),
             new ObjectNormalizer(),
             new ArrayDenormalizer(),
-            new DateTimeNormalizer([
-                DateTimeNormalizer::FORMAT_KEY => 'U',
-            ]),
         ], [new JsonEncoder()]);
     }
 
